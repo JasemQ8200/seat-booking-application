@@ -36,5 +36,22 @@ class SeatBookingSystem:
             return booking_ref
         return False
 
+    def free_seat(self, row, column):
+        """Free a seat if it is currently booked."""
+        if self.seats[(row, column)] != "F":
+            # Remove the booking reference from the set as well.
+            del self.booking_references[self.seats[(row, column)]['booking_ref']]
+            self.seats[(row, column)] = "F"
+            return True
+        return False
+
+    def show_booking_status(self):
+        """Show the booking status of all the seats."""
+        for (row, column), details in self.seats.items():
+            if details == "F":
+                print(f"Seat {row}-{column} is available.")
+            else:
+                print(f"Seat {row}-{column} is booked: {details['booking_ref']} - {details['first_name']} {details['last_name']}")
+
 
 
